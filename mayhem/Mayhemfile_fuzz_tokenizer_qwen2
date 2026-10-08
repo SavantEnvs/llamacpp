@@ -1,0 +1,10 @@
+project: savantenvs/llamacpp
+target: fuzz_tokenizer_qwen2
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_tokenizer_qwen2/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_tokenizer_qwen2 -detect_leaks=0
+    libfuzzer: true
+    cwd: /dev/shm
+    dictionary: /mayhem/mayhem/fuzz_grammar.dict

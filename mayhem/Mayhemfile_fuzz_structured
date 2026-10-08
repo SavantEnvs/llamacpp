@@ -1,0 +1,13 @@
+project: savantenvs/llamacpp
+target: fuzz_structured
+# GGUF model loader. The harness consumes 50 key strings from the front of the input and the GGUF payload
+# after them, so only valid_payload.seed (50 empty "\\A" strings + dummy.gguf + filler for the tail
+# integrals) reaches the parser; random bytes and a bare .gguf stay at ~150 edges.
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_structured/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_structured -detect_leaks=0
+    libfuzzer: true
+    cwd: /dev/shm
+    dictionary: /mayhem/mayhem/fuzz_load_model.dict

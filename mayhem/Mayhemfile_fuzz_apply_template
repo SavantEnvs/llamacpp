@@ -1,0 +1,10 @@
+project: savantenvs/llamacpp
+target: fuzz_apply_template
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_apply_template/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_apply_template -detect_leaks=0
+    libfuzzer: true
+    cwd: /dev/shm
+    dictionary: /mayhem/mayhem/fuzz_grammar.dict
