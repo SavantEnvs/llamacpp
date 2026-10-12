@@ -1,0 +1,11 @@
+project: savantenvs/llamacpp
+target: fuzz_load_model
+# GGUF model loader; random bytes miss the GGUF magic and cover minimal code without a valid seed
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_load_model/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_load_model -detect_leaks=0
+    libfuzzer: true
+    cwd: /dev/shm
+    dictionary: /mayhem/mayhem/fuzz_load_model.dict

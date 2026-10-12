@@ -1,0 +1,11 @@
+project: savantenvs/llamacpp
+target: fuzz_structurally_created
+# size<256 gate: dummy.gguf (>=256 bytes) is the seed that clears it; the loader then runs on the harness-built GGUF
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_structurally_created/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_structurally_created -detect_leaks=0
+    libfuzzer: true
+    cwd: /dev/shm
+    dictionary: /mayhem/mayhem/fuzz_load_model.dict
